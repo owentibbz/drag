@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draggable Container</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #e0e0e0;
+            /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #draggable {
+            width: 100px;
+            /* Width of the container */
+            height: 100px;
+            /* Height of the container */
+            background-color: blue;
+            /* Container color */
+            position: absolute;
+            /* Allow free movement */
+            cursor: grab;
+            /* Change cursor to indicate draggable */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="draggable">drag me</div>
+
+    <script>
+        const draggable = document.getElementById('draggable');
+        let offsetX, offsetY, isDragging = false;
+
+        // Mouse down event to start dragging
+        draggable.addEventListener('mousedown', (event) => {
+            isDragging = true;
+            offsetX = event.clientX - draggable.getBoundingClientRect().left;
+            offsetY = event.clientY - draggable.getBoundingClientRect().top;
+            draggable.style.cursor = 'grabbing'; // Change cursor to grabbing
+        });
+
+        // Mouse move event to drag the container
+        document.addEventListener('mousemove', (event) => {
+            if (isDragging) {
+                draggable.style.left = `${event.clientX - offsetX}px`;
+                draggable.style.top = `${event.clientY - offsetY}px`;
+            }
+        });
+
+        // Mouse up event to stop dragging
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            draggable.style.cursor = 'grab'; // Change cursor back
+        });
+    </script>
+</body>
+
+</html>
